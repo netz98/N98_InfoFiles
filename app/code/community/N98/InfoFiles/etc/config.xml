@@ -44,6 +44,17 @@ This software is provided by the netz98 new media GmbH without any express or im
             </updates>
         </layout>
     </frontend>
+    <admin>
+        <routers>
+             <adminhtml>
+                 <args>
+                     <modules>
+                         <n98infofiles before="Mage_Adminhtml">N98_InfoFiles</n98infofiles>
+                     </modules>
+                 </args>
+             </adminhtml>
+        </routers>
+    </admin>
     <global>
         <blocks>
             <n98infofiles>
@@ -54,6 +65,11 @@ This software is provided by the netz98 new media GmbH without any express or im
             <n98infofiles>
                 <class>N98_InfoFiles_Helper</class>
             </n98infofiles>
+            <adminhtml>
+                <rewrite>
+                    <media_js>N98_InfoFiles_Helper_Media_Js</media_js>
+                </rewrite>
+            </adminhtml>
         </helpers>
     </global>
     <adminhtml>

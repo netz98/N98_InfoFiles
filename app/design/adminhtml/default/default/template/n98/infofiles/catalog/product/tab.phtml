@@ -3,7 +3,29 @@
  * Custom tab template
  */
 ?>
-<div class="input-field">
- <label for="custom_field">Custom Field</label>
- <input type="text" class="input-text" name="custom_field" id="custom_field" />
+
+<div class="entry-edit">
+
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Files') ?></h4>
+    </div>
+
+    <div id="group_files" class="fieldset fieldset-wide">
+
+        <div class="input-field">
+         <label for="custom_field">Custom Field</label>
+         <input type="text" class="input-text" name="custom_field" id="custom_field" />
+        </div>
+
+<?php
+    $uploader = $this->getLayout()->createBlock('adminhtml/media_uploader');
+    
+    $url = Mage::getModel('adminhtml/url')->addSessionParam()->getUrl('*/files/upload');
+//  the next line can be uncommeted to debug the uploading via xdebug (in netbeans)
+//  $url.= "&XDEBUG_SESSION_START=netbeans-xdebug";
+    $uploader->getConfig()->setUrl( $url );
+
+    echo $uploader->toHtml();
+?>
+    </div>
 </div>

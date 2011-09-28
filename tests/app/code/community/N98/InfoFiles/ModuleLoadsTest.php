@@ -26,4 +26,12 @@ class N98_InfoFiles_ModuleLoadsTest extends PHPUnit_Framework_TestCase
         //validate instance
         $this->assertInstanceOf('N98_InfoFiles_Block_MoreInfo', $block);
     }
+
+    /**
+     * Tests if the helper is correctly loaded
+     */
+    public function testLoadHelper() {
+        $helper = Mage::helper('adminhtml/media_js');
+        $this->assertInstanceOf('N98_InfoFiles_Helper_Media_Js', $helper);
+    }
 }
