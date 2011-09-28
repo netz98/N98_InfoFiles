@@ -35,35 +35,7 @@
  * @package N98_InfoFiles
  */
 
-/**
- * We add the functionality to detect wheter a javascript is already included.
- * By this conflicts of the image uploader and the file uploader are avoided.
- */
-class N98_InfoFiles_Helper_Media_Js extends Mage_Adminhtml_Helper_Media_Js
+class N98_InfoFiles_Block_Adminhtml_Media_Uploader extends Mage_Adminhtml_Block_Media_Uploader
 {
-    /**
-     * List of already included files (filenames are in the keys)
-     *
-     * @var array
-     */
-    protected $_alreadyIncluded = array();
-    
-    /**
-     * Retrieve javascript include code
-     * Checks if the file was already included to not include it twice.
-     *
-     * @param   string $file
-     * @return  string
-     */
-    public function includeScript($file)
-    {
-        if (isset($this->_alreadyIncluded[$file])) {
-            return "<!-- $file already included before -->";
-        } else {
-            $this->_alreadyIncluded[$file] = true;
-            return parent::includeScript ($file);
-        }
-    }
-
 
 }

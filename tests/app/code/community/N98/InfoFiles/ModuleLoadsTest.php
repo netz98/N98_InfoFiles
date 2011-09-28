@@ -19,12 +19,13 @@ class N98_InfoFiles_ModuleLoadsTest extends PHPUnit_Framework_TestCase
     /**
      * Tests if the block is correctly loaded
      */
-    public function testLoadBlock()
+    public function testLoadBlocks()
     {
         $block = Mage::app()->getLayout()->createBlock('n98infofiles/moreInfo');
-
-        //validate instance
         $this->assertInstanceOf('N98_InfoFiles_Block_MoreInfo', $block);
+
+        $block = Mage::app()->getLayout()->createBlock('n98infofiles/adminhtml_media_uploader');
+        $this->assertInstanceOf('N98_InfoFiles_Block_Adminhtml_Media_Uploader', $block);
     }
 
     /**
