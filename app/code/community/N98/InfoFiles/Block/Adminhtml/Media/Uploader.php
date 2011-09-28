@@ -38,4 +38,13 @@
 class N98_InfoFiles_Block_Adminhtml_Media_Uploader extends Mage_Adminhtml_Block_Media_Uploader
 {
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setTemplate('n98/infofiles/uploader.phtml');
+        $url = Mage::getModel('adminhtml/url')->addSessionParam()->getUrl('*/files/upload');
+//      the next line can be uncommeted to debug the uploading via xdebug (in netbeans)
+//      $url.= "&XDEBUG_SESSION_START=netbeans-xdebug";
+        $this->getConfig()->setUrl($url);
+    }
 }

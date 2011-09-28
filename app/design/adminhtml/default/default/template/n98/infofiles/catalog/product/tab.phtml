@@ -36,18 +36,9 @@
                 <tfoot>
                     <tr>
                         <td colspan="100" class="last" style="padding:8px">
-
 <?php
-    $uploader = $this->getLayout()->createBlock('n98infofiles/adminhtml_media_uploader');
-
-    $url = Mage::getModel('adminhtml/url')->addSessionParam()->getUrl('*/files/upload');
-//  the next line can be uncommeted to debug the uploading via xdebug (in netbeans)
-//  $url.= "&XDEBUG_SESSION_START=netbeans-xdebug";
-    $uploader->getConfig()->setUrl( $url );
-
-    echo $uploader->toHtml();
+    echo $this->getLayout()->createBlock('n98infofiles/adminhtml_media_uploader')->toHtml();
 ?>
-
                         </td>
                     </tr>
                 </tfoot>

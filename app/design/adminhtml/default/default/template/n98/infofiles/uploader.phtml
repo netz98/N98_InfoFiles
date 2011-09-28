@@ -1,41 +1,51 @@
 <?php
 /**
- * Magento
+ * netz98 InfoFiles magento module
  *
- * NOTICE OF LICENSE
+ * LICENSE
  *
- * This source file is subject to the Academic Free License (AFL 3.0)
- * that is bundled with this package in the file LICENSE_AFL.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/afl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
+ * Copyright © 2011.
+ * netz98 new media GmbH. Alle Rechte vorbehalten.
  *
- * DISCLAIMER
+ * Die Nutzung und Weiterverbreitung dieser Software in kompilierter oder nichtkompilierter Form, mit oder ohne Veränderung, ist unter den folgenden Bedingungen zulässig:
  *
- * Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
+ * 1. Weiterverbreitete kompilierte oder nichtkompilierte Exemplare müssen das obere Copyright, die Liste der Bedingungen und den folgenden Verzicht im Sourcecode enthalten.
+ * 2. Alle Werbematerialien, die sich auf die Eigenschaften oder die Benutzung der Software beziehen, müssen die folgende Bemerkung enthalten: "Dieses Produkt enthält Software, die von der netz98 new media GmbH entwickelt wurde."
+ * 3. Der Name der netz98 new media GmbH darf nicht ohne vorherige ausdrückliche, schriftliche Genehmigung zur Kennzeichnung oder Bewerbung von Produkten, die von dieser Software abgeleitet wurden, verwendet werden.
+ * 4. Es ist Lizenznehmern der netz98 new media GmbH nur dann erlaubt die veränderte Software zu verbreiten, wenn jene zu den Bedingungen einer Lizenz, die eine Copyleft-Klausel enthält, lizenziert wird.
  *
- * @category    design
- * @package     default_default
- * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
- * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * Diese Software wird von der netz98 new media GmbH ohne jegliche spezielle oder implizierte Garantien zur Verfügung gestellt. So übernimmt die netz98 new media GmbH keine Gewährleistung für die Verwendbarkeit der Software für einen speziellen Zweck oder die generelle Nutzbarkeit. Unter keinen Umständen ist netz98 haftbar für indirekte oder direkte Schäden, die aus der Verwendung der Software resultieren. Jegliche Schadensersatzansprüche sind ausgeschlossen.
+ *
+ *
+ * Copyright © 2011
+ * netz98 new media GmbH. All rights reserved.
+ *
+ * The use and redistribution of this software, either compiled or uncompiled, with or without modifications are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of compiled or uncompiled source must contain the above copyright notice, this list of the conditions and the following disclaimer:
+ * 2. All advertising materials mentioning features or use of this software must display the following acknowledgement: “This product includes software developed by the netz98 new media GmbH, Mainz.”
+ * 3. The name of the netz98 new media GmbH may not be used to endorse or promote products derived from this software without specific prior written permission.
+ * 4. License holders of the netz98 new media GmbH are only permitted to redistribute altered software, if this is licensed under conditions that contain a copyleft-clause.
+ * This software is provided by the netz98 new media GmbH without any express or implied warranties. netz98 is under no condition liable for the functional capability of this software for a certain purpose or the general usability. netz98 is under no condition liable for any direct or indirect damages resulting from the use of the software. Liability and Claims for damages of any kind are excluded.
  */
 ?>
 <?php
 /**
- * Uploader template for Wysiwyg Images
- *
- * @see Mage_Adminhtml_Block_Cms_Wysiwyg_Images_Content_Uploader
+ * @see N98_InfoFiles_Block_Adminhtml_Media_Uploader
  */
 ?>
 
+<?php echo $this->helper('adminhtml/media_js')->includeScript('lib/flex.js') ?>
+<?php echo $this->helper('adminhtml/media_js')->includeScript('mage/adminhtml/flexuploader.js') ?>
+<?php echo $this->helper('adminhtml/media_js')->includeScript('lib/FABridge.js') ?>
 <?php echo $this->helper('adminhtml/media_js')->getTranslatorScript() ?>
+
 
 <div id="<?php echo $this->getHtmlId() ?>" class="uploader">
     <div class="buttons">
+        <?php /* buttons included in flex object */ ?>
+        <?php  /*echo $this->getBrowseButtonHtml()*/  ?>
+        <?php  /*echo $this->getUploadButtonHtml()*/  ?>
         <div id="<?php echo $this->getHtmlId() ?>-install-flash" style="display:none">
             <?php echo Mage::helper('media')->__('This content requires last version of Adobe Flash Player. <a href="%s">Get Flash</a>', 'http://www.adobe.com/go/getflash/') ?>
         </div>
@@ -56,20 +66,26 @@
 
 <script type="text/javascript">
 //<![CDATA[
-maxUploadFileSizeInBytes = <?php echo $this->getDataMaxSizeInBytes() ?>;
-maxUploadFileSize = '<?php echo $this->getDataMaxSize() ?>';
 
-<?php echo $this->getJsObjectName() ?> = new Flex.Uploader('<?php echo $this->getHtmlId() ?>', '<?php echo $this->getSkinUrl('media/uploader.swf') ?>', <?php echo $this->getConfigJson() ?>);
+var maxUploadFileSizeInBytes = <?php echo $this->getDataMaxSizeInBytes() ?>;
+var maxUploadFileSize = '<?php echo $this->getDataMaxSize() ?>';
+
+<?php echo $this->getJsObjectName() ?> = new Flex.Uploader('<?php echo $this->getHtmlId() ?>', '<?php echo $this->getUploaderUrl('media/uploader.swf') ?>', <?php echo $this->getConfigJson() ?>);
 <?php echo $this->getJsObjectName() ?>.onFilesComplete = function(completedFiles){
     completedFiles.each(function(file){
         <?php echo $this->getJsObjectName() ?>.removeFile(file.id);
     });
-    window.alert("fertisch");
-//    MediabrowserInstance.handleUploadComplete();
+    window.alert("done");
 }
 // hide flash buttons
 if ($('<?php echo $this->getHtmlId() ?>-flash') != undefined) {
     $('<?php echo $this->getHtmlId() ?>-flash').setStyle({float:'left'});
 }
+//]]>
+
+if (varienGlobalEvents) {
+    varienGlobalEvents.attachEventHandler('tabChangeBefore', <?php echo $this->getJsObjectName() ?>.onContainerHideBefore);
+}
+
 //]]>
 </script>
