@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<layout>
+    <adminhtml_catalog_product_edit>
+        <reference name="product_tabs">
+            <action method="addTabAfter">
+                <name>infofiles</name>
+                <block>n98infofiles/adminhtml_catalog_product_tab</block>
+                <after>group_50</after> <!-- insert after images -->
+            </action>
+        </reference>
+    </adminhtml_catalog_product_edit>
+</layout>

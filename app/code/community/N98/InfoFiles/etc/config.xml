@@ -57,13 +57,20 @@ This software is provided by the netz98 new media GmbH without any express or im
         </helpers>
     </global>
     <adminhtml>
+        <layout>
+            <updates>
+                <customtabs>
+                    <file>n98/infofiles.xml</file>
+                </customtabs>
+            </updates>
+        </layout>
         <translate>
             <modules>
-                <N98_FlyTo>
+                <N98_InfoFiles>
                     <files>
                         <default>N98_InfoFiles.csv</default>
                     </files>
-                </N98_FlyTo>
+                </N98_InfoFiles>
             </modules>
         </translate>
     </adminhtml>
