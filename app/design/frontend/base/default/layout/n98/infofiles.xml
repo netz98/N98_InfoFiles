@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
 <layoutUpdate>
     <catalog_product_view>
-        <reference name="content">
-            <block type="n98flyto/flyer" name="n98flyto" template="n98/flyto/flyto.phtml" after="-" />
+        <reference name="product.info">
+            <block type="n98infofiles/moreInfo" name="n98infofiles.moreinfo" as="n98infofiles.moreinfo" template="n98/infofiles/moreinfo.phtml">
+                <action method="addToParentGroup"><group>detailed_info</group></action>
+            </block>
         </reference>
     </catalog_product_view>
 </layoutUpdate>
