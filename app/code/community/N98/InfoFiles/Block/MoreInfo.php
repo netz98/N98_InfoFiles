@@ -38,5 +38,12 @@
 class N98_InfoFiles_Block_MoreInfo extends Mage_Core_Block_Template
 {
 
+    /**
+     * Get the product
+     * @return Mage_Catalog_Model_Product
+     */
+    public function getProduct() {
+        return $this->getParentBlock()->getProduct();
+    }
     
 }

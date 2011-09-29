@@ -35,21 +35,40 @@
  * @package N98_InfoFiles
  */
 
+class N98_InfoFiles_Model_File extends Mage_Core_Model_Abstract
+{
+    /**
+     * Create model
+     */
+    protected function _construct()
+    {
+        $this->_init('n98infofiles/file');
+        $this->setIdFieldName('id');
+    }
 
-$installer = $this;
-/* @var $installer Mage_Core_Model_Resource_Setup */
+    /**
+     * Get the collection
+     *
+     * This function exists only to enable code completion.
+     *
+     * @return N98_InfoFiles_Model_Mysql4_File_Collection
+     */
+    public function getCollection()
+    {
+        return parent::getCollection();
+    }
 
-$installer->startSetup();
+    /**
+     * Retrieves the download link
+     * @return string
+     */
+    public function getUrl()
+    {
+        $filename = $this->getFilename();
 
-$installer->run("
-    CREATE TABLE {$installer->getTable('n98infofiles/file')}  (
-            `id`               int(11) AUTO_INCREMENT NOT NULL,
-            `product_id`       int(11) NOT NULL,
-            `store_id`         int(11) NOT NULL,
-            `label`            varchar(255) NOT NULL,
-            `filename`         varchar(255) NOT NULL,
-            PRIMARY KEY(`id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-");
+        $url = Mage::getSingleton('catalog/product_media_config')
+                    ->getMediaUrl($filename);
 
-$installer->endSetup();
+        return $url;
+    }
+}

@@ -67,41 +67,39 @@ class N98_InfoFiles_Model_Observer
 
             $files = $this->_getRequest()->getPost('infofile_file');
             $names = $this->_getRequest()->getPost('infofile_name');
+            $labels = $this->_getRequest()->getPost('infofile_label');
 
             for ($i=1;$i<count($files);$i++) { // Skip $i=0, because it contains the template!
+
                 $fileName = $files[$i];
                 $originalName = $names[$i];
+
+                // move the file from the tmp media folder to the real folder
                 $currentFile = Mage::getSingleton('catalog/product_media_config')->getTmpMediaPath($fileName);
-
                 $dispretionPath = Varien_File_Uploader::getDispretionPath($originalName);
-
                 $destinationFolder = Mage::getSingleton('catalog/product_media_config')->getMediaPath($dispretionPath);
                 $destFile = Mage::getSingleton('catalog/product_media_config')->getMediaPath($dispretionPath . DS . $originalName);
-
-
                 if (!(@is_dir($destinationFolder) || @mkdir($destinationFolder, 0777, true))) {
                     throw new Exception("Unable to create directory '{$destinationFolder}'.");
                 }
-        
                 // adds a counter to the filename
+                $destFilename = $dispretionPath . DS . Varien_File_Uploader::getNewFileName($destFile);
                 $destFile = Mage::getSingleton('catalog/product_media_config')
-                    ->getMediaPath($dispretionPath . DS . Varien_File_Uploader::getNewFileName($destFile));
-
-                echo $currentFile."\n";
-                echo $destFile."\n";
+                    ->getMediaPath($destFilename);
                 rename($currentFile, $destFile);
+
+                // add entry in the database
+                $model = Mage::getModel('n98infofiles/file');
+                $model->setFilename($destFilename);
+
+                $label = trim($labels[$i]);
+                if (empty($label))
+                    $label = $originalName;
+                $model->setLabel($label);
+                $model->setProductId($product->getId());
+                $model->save();
             }
 
-
-            var_dump($this->_getRequest()->getPost('infofile_label'));
-            die("foo");
-            $customFieldValue =  $this->_getRequest()->getPost('custom_field');
-
-            /**
-             * Uncomment the line below to save the product
-             *
-             */
-            //$product->save();
         }
         catch (Exception $e) {
             Mage::getSingleton('adminhtml/session')->addError($e->getMessage());

@@ -32,7 +32,7 @@ This software is provided by the netz98 new media GmbH without any express or im
 <config>
     <modules>
         <N98_InfoFiles>
-            <version>0.0.1</version>
+            <version>0.0.2</version>
         </N98_InfoFiles>
     </modules>
     <frontend>
@@ -43,6 +43,15 @@ This software is provided by the netz98 new media GmbH without any express or im
                 </n98infofiles>
             </updates>
         </layout>
+        <translate>
+            <modules>
+                <N98_InfoFiles>
+                    <files>
+                        <default>N98_InfoFiles.csv</default>
+                    </files>
+                </N98_InfoFiles>
+            </modules>
+        </translate>
     </frontend>
     <admin>
         <routers>
@@ -64,9 +73,9 @@ This software is provided by the netz98 new media GmbH without any express or im
             <n98infofiles_mysql4>
                 <class>N98_InfoFiles_Model_Mysql4</class>
                 <entities>
-                    <list>
-                        <table>n98infofiles_list</table>
-                    </list>
+                    <file>
+                        <table>n98infofiles_file</table>
+                    </file>
                 </entities>
             </n98infofiles_mysql4>
         </models>

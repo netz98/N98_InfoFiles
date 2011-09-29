@@ -1,5 +1,20 @@
 <?php
     $_product = $this->getProduct();
-?>
 
-MORE INFO
+    $model = Mage::getModel('n98infofiles/file');
+    /** @var $model N98InfoFiles_Model_File */
+    $collection = $model->getCollection();
+    $collection->addProductFilter($_product);
+    $collection->load();
+
+?>
+<?php if (count($collection) > 0): ?>
+<h2><?php echo $this->helper('n98infofiles')->__('More information') ?></h2>
+<ul class="product-infofiles-list">
+<?php   foreach($collection as $file): ?>
+    <li>
+    <a href="<?php echo $file->getUrl() ?>" target="_blank"><?php echo $file->getLabel(); ?></a>
+    </li>
+<?php   endforeach ?>
+</ul>
+<?php endif ?>

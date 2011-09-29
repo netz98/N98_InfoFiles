@@ -35,14 +35,13 @@
  * @package N98_InfoFiles
  */
 
-class N98_InfoFiles_Model_List extends Mage_Core_Model_Abstract
+class N98_InfoFiles_Model_Mysql4_File extends Mage_Core_Model_Mysql4_Abstract
 {
     /**
-     * Create model
+     * Create resource
      */
     protected function _construct()
     {
-        $this->_init('n98infofiles/list');
-        $this->setIdFieldName('id');
+        $this->_init('n98infofiles/file', 'id');
     }
 }

@@ -17,7 +17,7 @@
 class N98_InfoFiles_ModuleLoadsTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * Tests if the block is correctly loaded
+     * Tests if the blocks are correctly loaded
      */
     public function testLoadBlocks()
     {
@@ -34,5 +34,17 @@ class N98_InfoFiles_ModuleLoadsTest extends PHPUnit_Framework_TestCase
     public function testLoadHelper() {
         $helper = Mage::helper('adminhtml/media_js');
         $this->assertInstanceOf('N98_InfoFiles_Helper_Media_Js', $helper);
+    }
+
+    /**
+     * Tests if models are correctly loaded
+     */
+    public function testLoadModels() {
+        $model = Mage::getModel('n98infofiles/file');
+        $this->assertInstanceOf('N98_InfoFiles_Model_File', $model);
+
+        $ressourceModel = $model->getResource();
+        $this->assertInstanceOf('N98_InfoFiles_Model_Mysql4_File', $ressourceModel);
+
     }
 }

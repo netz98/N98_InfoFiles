@@ -35,13 +35,27 @@
  * @package N98_InfoFiles
  */
 
-class N98_InfoFiles_Model_Mysql4_List extends Mage_Core_Model_Mysql4_Abstract
+class N98_InfoFiles_Model_Mysql4_File_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
 {
     /**
-     * Create resource
+     * Initialize resource model
+     *
      */
     protected function _construct()
     {
-        $this->_init('n98infofiles/list', 'id');
+        $this->_init('n98infofiles/file');
+    }
+
+   /**
+     * Filter by product
+     *
+     * @param Mage_Catalog_Model_Product $product
+     * @return N98_InfoFiles_Model_Mysql4_File_Collection
+     */
+    public function addProductFilter(Mage_Catalog_Model_Product $product)
+    {
+        $this->addFieldToFilter('product_id', $product->getId());
+
+        return $this;
     }
 }
