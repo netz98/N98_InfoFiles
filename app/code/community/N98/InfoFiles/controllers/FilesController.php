@@ -44,9 +44,7 @@ class N98_InfoFiles_FilesController extends Mage_Adminhtml_Controller_Action
     {
         try {
             $uploader = new Mage_Core_Model_File_Uploader('file');
-            $uploader->setAllowedExtensions(array('jpg','jpeg','gif','png'));
-            $uploader->addValidateCallback('catalog_product_image',
-                Mage::helper('catalog/image'), 'validateUploadFile');
+            $uploader->setAllowedExtensions();
             $uploader->setAllowRenameFiles(true);
             $uploader->setFilesDispersion(true);
             $result = $uploader->save(
@@ -54,7 +52,7 @@ class N98_InfoFiles_FilesController extends Mage_Adminhtml_Controller_Action
             );
 
             $result['url'] = Mage::getSingleton('catalog/product_media_config')->getTmpMediaUrl($result['file']);
-            $result['file'] = $result['file'] . '.tmp';
+//            $result['file'] = $result['file'] . '.tmp';
             $result['cookie'] = array(
                 'name'     => session_name(),
                 'value'    => $this->_getSession()->getSessionId(),

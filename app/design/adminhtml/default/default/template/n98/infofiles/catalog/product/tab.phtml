@@ -26,11 +26,11 @@
                         <th class="last"><?php echo $this->__("Remove") ?></th>
                     </tr>
                 </thead>
-                <tbody id="media_gallery_content_list">
-                    <tr id="media_gallery_content_template" class="template no-display">
-                            <td class="cell-image">foo</td>
-                            <td class="cell-label"><input class="input-text"  type="text"></td>
-                            <td class="cell-remove a-center last"><input type="checkbox"></td>
+                <tbody id="infofiles_list">
+                    <tr id="infofiles_template" class="template no-display">
+                            <td class="cell-file"><input type="hidden" name="infofile_file[]" value="__file__"><input type="hidden" name="infofile_name[]" value="__name__"><a href="__url__">__name__</a></td>
+                            <td class="cell-label"><input class="input-text" type="text" name="infofile_label[]"></td>
+                            <td class="cell-remove a-center last"><input type="checkbox" name="infofile_remove[]"></td>
                     </tr>
                 </tbody>
                 <tfoot>

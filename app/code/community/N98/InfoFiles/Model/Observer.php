@@ -63,10 +63,38 @@ class N98_InfoFiles_Model_Observer
         Mage::getSingleton('adminhtml/session')->addError("Saving observer was called but is not yet implemented");
 
         try {
-            /**
-             * Perform any actions you want here
-             *
-             */
+            echo "<pre>";
+
+            $files = $this->_getRequest()->getPost('infofile_file');
+            $names = $this->_getRequest()->getPost('infofile_name');
+
+            for ($i=1;$i<count($files);$i++) { // Skip $i=0, because it contains the template!
+                $fileName = $files[$i];
+                $originalName = $names[$i];
+                $currentFile = Mage::getSingleton('catalog/product_media_config')->getTmpMediaPath($fileName);
+
+                $dispretionPath = Varien_File_Uploader::getDispretionPath($originalName);
+
+                $destinationFolder = Mage::getSingleton('catalog/product_media_config')->getMediaPath($dispretionPath);
+                $destFile = Mage::getSingleton('catalog/product_media_config')->getMediaPath($dispretionPath . DS . $originalName);
+
+
+                if (!(@is_dir($destinationFolder) || @mkdir($destinationFolder, 0777, true))) {
+                    throw new Exception("Unable to create directory '{$destinationFolder}'.");
+                }
+        
+                // adds a counter to the filename
+                $destFile = Mage::getSingleton('catalog/product_media_config')
+                    ->getMediaPath($dispretionPath . DS . Varien_File_Uploader::getNewFileName($destFile));
+
+                echo $currentFile."\n";
+                echo $destFile."\n";
+                rename($currentFile, $destFile);
+            }
+
+
+            var_dump($this->_getRequest()->getPost('infofile_label'));
+            die("foo");
             $customFieldValue =  $this->_getRequest()->getPost('custom_field');
 
             /**

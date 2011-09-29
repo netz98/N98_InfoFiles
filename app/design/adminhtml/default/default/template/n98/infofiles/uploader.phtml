@@ -72,10 +72,23 @@ var maxUploadFileSize = '<?php echo $this->getDataMaxSize() ?>';
 
 <?php echo $this->getJsObjectName() ?> = new Flex.Uploader('<?php echo $this->getHtmlId() ?>', '<?php echo $this->getUploaderUrl('media/uploader.swf') ?>', <?php echo $this->getConfigJson() ?>);
 <?php echo $this->getJsObjectName() ?>.onFilesComplete = function(completedFiles){
+    // remove uploaded files from the list
     completedFiles.each(function(file){
+        var templateElement = $('infofiles_template');
+        var template = new Template('<tr id="__id__" class="preview">' + 
+            templateElement.innerHTML + '</tr>', new RegExp(
+            '(^|.|\\r|\\n)(__([a-zA-Z0-9_]+)__)', ''))
+
+        var response = file.response.evalJSON();
+        // ignore errornous files
+        if (response.error) return;
+        var listElement = $('infofiles_list');
+        var html = template.evaluate(response);
+        Element.insert(listElement, {
+            bottom :html
+        });
         <?php echo $this->getJsObjectName() ?>.removeFile(file.id);
     });
-    window.alert("done");
 }
 // hide flash buttons
 if ($('<?php echo $this->getHtmlId() ?>-flash') != undefined) {
