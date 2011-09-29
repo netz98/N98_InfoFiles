@@ -114,6 +114,17 @@ This software is provided by the netz98 new media GmbH without any express or im
                 </customtabs>
             </updates>
         </layout>
+        <events>
+            <catalog_product_save_after>
+                <observers>
+                    <n98infofiles_save_product_data>
+                        <type>singleton</type>
+                        <class>n98infofiles/observer</class>
+                        <method>saveProductTabData</method>
+                    </n98infofiles_save_product_data>
+                </observers>
+            </catalog_product_save_after>
+        </events>
         <translate>
             <modules>
                 <N98_InfoFiles>
