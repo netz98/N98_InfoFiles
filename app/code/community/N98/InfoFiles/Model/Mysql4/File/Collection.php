@@ -55,7 +55,30 @@ class N98_InfoFiles_Model_Mysql4_File_Collection extends Mage_Core_Model_Resourc
     public function addProductFilter(Mage_Catalog_Model_Product $product)
     {
         $this->addFieldToFilter('product_id', $product->getId());
+        return $this;
+    }
 
+    /**
+     * Filter by storeview
+     * Selects store view and the default (id = 0)
+     *
+     * @param int $storeId ID of the storeview
+     * @return N98_InfoFiles_Model_Mysql4_File_Collection
+     */
+    public function addStoreFilter($storeId)
+    {
+        $this->addFieldToFilter('store_id', array('in' => array(0, $storeId)));
+        return $this;
+    }
+
+    /**
+     * Filter only by the storeview
+     * (do not include default store view)
+     *
+     * @param int $storeId ID of the storeview
+     */
+    public function addExclusiveStoreFilter($storeId) {
+        $this->addFieldToFilter('store_id', $storeId);
         return $this;
     }
 }

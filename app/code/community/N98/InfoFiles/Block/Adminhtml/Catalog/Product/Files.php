@@ -34,130 +34,96 @@
  * @category N98
  * @package N98_InfoFiles
  */
-class N98_InfoFiles_Model_File extends Mage_Core_Model_Abstract
+
+/**
+ * Creates the tab for the file management
+ */
+class N98_InfoFiles_Block_Adminhtml_Catalog_Product_Files
+extends Mage_Adminhtml_Block_Template
+implements Mage_Adminhtml_Block_Widget_Tab_Interface 
 {
-
+ 
     /**
-     * File type icons and their extensions
+     * Set the template for the block
      */
-    protected $fileTypes = array(
-        'icon_audio' => array('wav', 'fla', 'mp3'),
-        'icon_doc' => array('doc', 'docx', 'odt', 'wri', 'rtf'),
-        'icon_film' => array('mpg', 'mpeg', 'avi', 'flv'),
-        'icon_fla' => array('fla', 'flash'),
-        'icon_html' => array('html', 'htm'),
-        'icon_image' => array('png', 'jpg', 'jpeg', 'gif', 'tif', 'tiff'),
-        'icon_mov' => array('mov'),
-        'icon_pdf' => array('pdf'),
-        'icon_photoshop' => array('psd'),
-        'icon_ppt' => array('ppt', 'pptx', 'odp'),
-        'icon_swf' => array('swf'),
-        'icon_txt' => array('txt'),
-        'icon_vector' => array('svg', 'svgz', 'cdr', 'ai'),
-        'icon_xls' => array('xls', 'ods', 'xlsx'),
-        'icon_xml' => array('xml'),
-        'icon_zip' => array('zip', 'rar', 'jar', '7z', 'arj', 'cab'),
-    );
-
-    /**
-     * Create model
-     */
-    protected function _construct()
+    public function _construct()
     {
-        $this->_init('n98infofiles/file');
-        $this->setIdFieldName('id');
+        parent::_construct();
+        $this->setTemplate('n98/infofiles/catalog/product/files.phtml');
     }
-
+     
     /**
-     * Get the collection
-     *
-     * This function exists only to enable code completion.
-     *
-     * @return N98_InfoFiles_Model_Mysql4_File_Collection
-     */
-    public function getCollection()
-    {
-        return parent::getCollection();
-    }
-
-    /**
-     * Retrieves the download link
-     * 
-     * @return string
-     */
-    public function getUrl()
-    {
-        $filename = $this->getFilename();
-        $url = Mage::getSingleton('catalog/product_media_config')
-                        ->getMediaUrl($filename);
-        return $url;
-    }
-
-    /**
-     * Retrieves the filename only
+     * Retrieve the label
      *
      * @return string
      */
-    public function getName()
+    public function getTabLabel()
     {
-        $filename = $this->getFilename();
-        return basename($filename);
+        return $this->__('Files');
     }
-
+     
     /**
-     * Get file size on disk
+     * Retrieve the title
      *
-     * @return int File size in byte
-     */
-    public function getSize()
-    {
-        $filename = Mage::getSingleton('catalog/product_media_config')
-                        ->getMediaPath($this->getFilename());
-        return filesize($filename);
-    }
-
-    /**
-     * Format file size, for example 1024 = 1 KiB
-     *
-     * @param int $size Size in bytes
      * @return string
      */
-    public static function format_bytes($size)
+    public function getTabTitle()
     {
-        $units = array(' B', ' KiB', ' MiB', ' GiB', ' TiB');
-        for ($i = 0; $size >= 1024 && $i < 4; $i++)
-            $size /= 1024;
-        return round($size, 2) . $units[$i];
+        return $this->__('Files');
+    }
+     
+    /**
+     * Display the tab
+     *
+     * @return bool
+     */
+    public function canShowTab()
+    {
+        return true;
+    }
+     
+    /**
+     * Stops the tab being hidden
+     *
+     * @return bool
+     */
+    public function isHidden()
+    {
+        return false;
     }
 
     /**
-     * Get formated file size
+     * Retrieve edited product model instance
+     *
+     * @return Mage_Catalog_Model_Product
      */
-    public function getSizeFormated()
+    public function getProduct()
     {
-        return self::format_bytes($this->getSize());
+        return Mage::registry('product');
     }
 
     /**
-     * Get the file icon based on the file extension
-     * 
-     * @return string
+     * Get store ID
+     *
+     * @return int
      */
-    public function getIcon()
+    public function getStoreId()
     {
-        // get extension
-        $filename = $this->getName();
-        $extension = pathinfo($filename, PATHINFO_EXTENSION);
-
-        // determine icon
-        foreach ($this->fileTypes as $icon => $types) {
-            if (in_array($extension, $types)) {
-                return $icon . '.gif';
-            }
-        }
-
-        // nothing found => use generic icon
-        return 'icon_generic.gif';
+        return $this->getProduct()->getStoreId();
     }
 
-}
+
+    /**
+     * Get collection of the associated files
+     *
+     * @return
+     */
+    public function getFileCollection() {
+        $model = Mage::getModel('n98infofiles/file');
+        /** @var $model N98_InfoFiles_Model_File */
+        $collection = $model->getCollection();
+        $collection->addProductFilter($this->getProduct());
+        $collection->addExclusiveStoreFilter($this->getProduct()->getStoreId());
+        $collection->load();
+        return $collection;
+    }}

@@ -1,19 +1,13 @@
 <?php
-    $_product = $this->getProduct();
-
-    $model = Mage::getModel('n98infofiles/file');
-    /** @var $model N98InfoFiles_Model_File */
-    $collection = $model->getCollection();
-    $collection->addProductFilter($_product);
-    $collection->load();
-
+    $collection = $this->getFileCollection();
 ?>
 <?php if (count($collection) > 0): ?>
 <h2><?php echo $this->helper('n98infofiles')->__('More information') ?></h2>
 <ul class="product-infofiles-list">
 <?php   foreach($collection as $file): ?>
     <li>
-    <a href="<?php echo $file->getUrl() ?>" target="_blank"><?php echo $file->getLabel(); ?></a>
+    <img width="16" height="16" src="<?php echo $this->getSkinUrl('images/n98infofiles/'. $file->getIcon()) ?>">
+    <a href="<?php echo $file->getUrl() ?>" target="_blank"><?php echo $file->getLabel(); ?></a> (<?php echo $file->getSizeFormated() ?>)
     </li>
 <?php   endforeach ?>
 </ul>

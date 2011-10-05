@@ -59,18 +59,15 @@ class N98_InfoFiles_Model_Observer
         self::$_singletonFlag = true;
 
         $product = $observer->getEvent()->getProduct();
-
-        Mage::getSingleton('adminhtml/session')->addError("Saving observer was called but is not yet implemented");
-
+        $storeId = $product->getStoreId();
         try {
-            echo "<pre>";
 
             $files = $this->_getRequest()->getPost('infofile_file');
             $names = $this->_getRequest()->getPost('infofile_name');
             $labels = $this->_getRequest()->getPost('infofile_label');
+            $remove = $this->_getRequest()->getPost('infofile_remove');
 
             for ($i=1;$i<count($files);$i++) { // Skip $i=0, because it contains the template!
-
                 $fileName = $files[$i];
                 $originalName = $names[$i];
 
@@ -93,11 +90,33 @@ class N98_InfoFiles_Model_Observer
                 $model->setFilename($destFilename);
 
                 $label = trim($labels[$i]);
-                if (empty($label))
+                if (empty($label)) {
                     $label = $originalName;
+                }
                 $model->setLabel($label);
                 $model->setProductId($product->getId());
+                $model->setStoreId($storeId);
                 $model->save();
+            }
+
+            // process existing files
+            $exLabels = $this->_getRequest()->getPost('infofile_existing_label');
+            $exRemove = $this->_getRequest()->getPost('infofile_existing_remove');
+            foreach($exLabels as $id=>$label) {
+                $fileModel = Mage::getModel('n98infofiles/file');
+                $fileModel->load($id);
+
+                if (isset($exRemove[$id])) {
+                    // delete file from disk
+                    $filename = Mage::getSingleton('catalog/product_media_config')->getMediaPath($fileModel->getFilename());
+                    unlink($filename);
+                    // delete record
+                    $fileModel->delete();
+                    continue;
+                }
+
+                $fileModel->setLabel($label);
+                $fileModel->save();
             }
 
         }

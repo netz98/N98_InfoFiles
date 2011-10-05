@@ -45,5 +45,19 @@ class N98_InfoFiles_Block_MoreInfo extends Mage_Core_Block_Template
     public function getProduct() {
         return $this->getParentBlock()->getProduct();
     }
-    
+
+    /**
+     * Get collection of the associated files
+     *
+     * @return 
+     */
+    public function getFileCollection() {
+        $model = Mage::getModel('n98infofiles/file');
+        /** @var $model N98_InfoFiles_Model_File */
+        $collection = $model->getCollection();
+        $collection->addProductFilter($this->getProduct());
+        $collection->addStoreFilter($this->getProduct()->getStoreId());
+        $collection->load();
+        return $collection;
+    }
 }

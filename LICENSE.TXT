@@ -28,9 +28,10 @@ This software is provided by the netz98 new media GmbH without any express or im
 
 = Included File Icons License =
 
-This package includes file type icons from the GNOME project.
+This package includes doctype icons obtained at:
 
-License:
+http://www.brandspankingnew.net/archive/2006/06/doctype_icons_2.html
+
 
 
 

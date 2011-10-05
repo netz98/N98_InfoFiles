@@ -37,6 +37,7 @@
 
 /**
  * Files controller
+ * Handels the upload from the flash uploader
  */
 class N98_InfoFiles_FilesController extends Mage_Adminhtml_Controller_Action
 {
@@ -52,7 +53,6 @@ class N98_InfoFiles_FilesController extends Mage_Adminhtml_Controller_Action
             );
 
             $result['url'] = Mage::getSingleton('catalog/product_media_config')->getTmpMediaUrl($result['file']);
-//            $result['file'] = $result['file'] . '.tmp';
             $result['cookie'] = array(
                 'name'     => session_name(),
                 'value'    => $this->_getSession()->getSessionId(),
@@ -70,6 +70,11 @@ class N98_InfoFiles_FilesController extends Mage_Adminhtml_Controller_Action
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
 
+    /**
+     * Checks if the user is allowed to call this controller
+     *
+     * @return boolean
+     */
     protected function _isAllowed()
     {
         return Mage::getSingleton('admin/session')->isAllowed('catalog/products');

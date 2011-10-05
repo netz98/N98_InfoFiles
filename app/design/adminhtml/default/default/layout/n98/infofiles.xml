@@ -4,7 +4,7 @@
         <reference name="product_tabs">
             <action method="addTabAfter">
                 <name>infofiles</name>
-                <block>n98infofiles/adminhtml_catalog_product_tab</block>
+                <block>n98infofiles/adminhtml_catalog_product_files</block>
                 <after>group_50</after> <!-- insert after images -->
             </action>
         </reference>
