@@ -34,9 +34,9 @@
  * @category N98
  * @package N98_InfoFiles
  */
-
 class N98_InfoFiles_Model_Mysql4_File_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
 {
+
     /**
      * Initialize resource model
      *
@@ -46,7 +46,7 @@ class N98_InfoFiles_Model_Mysql4_File_Collection extends Mage_Core_Model_Resourc
         $this->_init('n98infofiles/file');
     }
 
-   /**
+    /**
      * Filter by product
      *
      * @param Mage_Catalog_Model_Product $product
@@ -77,8 +77,10 @@ class N98_InfoFiles_Model_Mysql4_File_Collection extends Mage_Core_Model_Resourc
      *
      * @param int $storeId ID of the storeview
      */
-    public function addExclusiveStoreFilter($storeId) {
+    public function addExclusiveStoreFilter($storeId)
+    {
         $this->addFieldToFilter('store_id', $storeId);
         return $this;
     }
+
 }

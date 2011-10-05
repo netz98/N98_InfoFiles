@@ -34,9 +34,9 @@
  * @category N98
  * @package N98_InfoFiles
  */
-
 class N98_InfoFiles_Model_Mysql4_File extends Mage_Core_Model_Mysql4_Abstract
 {
+
     /**
      * Create resource
      */
@@ -44,4 +44,5 @@ class N98_InfoFiles_Model_Mysql4_File extends Mage_Core_Model_Mysql4_Abstract
     {
         $this->_init('n98infofiles/file', 'id');
     }
+
 }

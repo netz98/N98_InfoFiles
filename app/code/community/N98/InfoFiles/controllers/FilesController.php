@@ -41,6 +41,7 @@
  */
 class N98_InfoFiles_FilesController extends Mage_Adminhtml_Controller_Action
 {
+
     public function uploadAction()
     {
         try {
@@ -49,18 +50,17 @@ class N98_InfoFiles_FilesController extends Mage_Adminhtml_Controller_Action
             $uploader->setAllowRenameFiles(true);
             $uploader->setFilesDispersion(true);
             $result = $uploader->save(
-                Mage::getSingleton('catalog/product_media_config')->getBaseTmpMediaPath()
+                            Mage::getSingleton('catalog/product_media_config')->getBaseTmpMediaPath()
             );
 
             $result['url'] = Mage::getSingleton('catalog/product_media_config')->getTmpMediaUrl($result['file']);
             $result['cookie'] = array(
-                'name'     => session_name(),
-                'value'    => $this->_getSession()->getSessionId(),
+                'name' => session_name(),
+                'value' => $this->_getSession()->getSessionId(),
                 'lifetime' => $this->_getSession()->getCookieLifetime(),
-                'path'     => $this->_getSession()->getCookiePath(),
-                'domain'   => $this->_getSession()->getCookieDomain()
+                'path' => $this->_getSession()->getCookiePath(),
+                'domain' => $this->_getSession()->getCookieDomain()
             );
-
         } catch (Exception $e) {
             $result = array(
                 'error' => $e->getMessage(),
@@ -79,4 +79,6 @@ class N98_InfoFiles_FilesController extends Mage_Adminhtml_Controller_Action
     {
         return Mage::getSingleton('admin/session')->isAllowed('catalog/products');
     }
-} 
+
+}
+

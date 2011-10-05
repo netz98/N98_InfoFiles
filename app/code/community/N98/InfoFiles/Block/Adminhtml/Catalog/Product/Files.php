@@ -38,11 +38,9 @@
 /**
  * Creates the tab for the file management
  */
-class N98_InfoFiles_Block_Adminhtml_Catalog_Product_Files
-extends Mage_Adminhtml_Block_Template
-implements Mage_Adminhtml_Block_Widget_Tab_Interface 
+class N98_InfoFiles_Block_Adminhtml_Catalog_Product_Files extends Mage_Adminhtml_Block_Template implements Mage_Adminhtml_Block_Widget_Tab_Interface
 {
- 
+
     /**
      * Set the template for the block
      */
@@ -51,7 +49,7 @@ implements Mage_Adminhtml_Block_Widget_Tab_Interface
         parent::_construct();
         $this->setTemplate('n98/infofiles/catalog/product/files.phtml');
     }
-     
+
     /**
      * Retrieve the label
      *
@@ -61,7 +59,7 @@ implements Mage_Adminhtml_Block_Widget_Tab_Interface
     {
         return $this->__('Files');
     }
-     
+
     /**
      * Retrieve the title
      *
@@ -71,7 +69,7 @@ implements Mage_Adminhtml_Block_Widget_Tab_Interface
     {
         return $this->__('Files');
     }
-     
+
     /**
      * Display the tab
      *
@@ -81,7 +79,7 @@ implements Mage_Adminhtml_Block_Widget_Tab_Interface
     {
         return true;
     }
-     
+
     /**
      * Stops the tab being hidden
      *
@@ -112,13 +110,13 @@ implements Mage_Adminhtml_Block_Widget_Tab_Interface
         return $this->getProduct()->getStoreId();
     }
 
-
     /**
      * Get collection of the associated files
      *
      * @return
      */
-    public function getFileCollection() {
+    public function getFileCollection()
+    {
         $model = Mage::getModel('n98infofiles/file');
         /** @var $model N98_InfoFiles_Model_File */
         $collection = $model->getCollection();
@@ -126,4 +124,6 @@ implements Mage_Adminhtml_Block_Widget_Tab_Interface
         $collection->addExclusiveStoreFilter($this->getProduct()->getStoreId());
         $collection->load();
         return $collection;
-    }}
+    }
+
+}

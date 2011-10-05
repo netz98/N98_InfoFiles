@@ -34,9 +34,9 @@
  * @category N98
  * @package N98_InfoFiles
  */
-
 class N98_InfoFiles_Model_Observer
 {
+
     /**
      * Flag to stop observer executing more than once
      *
@@ -67,7 +67,7 @@ class N98_InfoFiles_Model_Observer
             $labels = $this->_getRequest()->getPost('infofile_label');
             $remove = $this->_getRequest()->getPost('infofile_remove');
 
-            for ($i=1;$i<count($files);$i++) { // Skip $i=0, because it contains the template!
+            for ($i = 1; $i < count($files); $i++) { // Skip $i=0, because it contains the template!
                 $fileName = $files[$i];
                 $originalName = $names[$i];
 
@@ -82,7 +82,7 @@ class N98_InfoFiles_Model_Observer
                 // adds a counter to the filename
                 $destFilename = $dispretionPath . DS . Varien_File_Uploader::getNewFileName($destFile);
                 $destFile = Mage::getSingleton('catalog/product_media_config')
-                    ->getMediaPath($destFilename);
+                                ->getMediaPath($destFilename);
                 rename($currentFile, $destFile);
 
                 // add entry in the database
@@ -102,7 +102,7 @@ class N98_InfoFiles_Model_Observer
             // process existing files
             $exLabels = $this->_getRequest()->getPost('infofile_existing_label');
             $exRemove = $this->_getRequest()->getPost('infofile_existing_remove');
-            foreach($exLabels as $id=>$label) {
+            foreach ($exLabels as $id => $label) {
                 $fileModel = Mage::getModel('n98infofiles/file');
                 $fileModel->load($id);
 
@@ -118,9 +118,7 @@ class N98_InfoFiles_Model_Observer
                 $fileModel->setLabel($label);
                 $fileModel->save();
             }
-
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
         }
     }
@@ -143,4 +141,5 @@ class N98_InfoFiles_Model_Observer
     {
         return Mage::app()->getRequest();
     }
+
 }

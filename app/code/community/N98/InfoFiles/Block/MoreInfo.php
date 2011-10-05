@@ -34,7 +34,6 @@
  * @category N98
  * @package N98_InfoFiles
  */
-
 class N98_InfoFiles_Block_MoreInfo extends Mage_Core_Block_Template
 {
 
@@ -42,7 +41,8 @@ class N98_InfoFiles_Block_MoreInfo extends Mage_Core_Block_Template
      * Get the product
      * @return Mage_Catalog_Model_Product
      */
-    public function getProduct() {
+    public function getProduct()
+    {
         return $this->getParentBlock()->getProduct();
     }
 
@@ -51,7 +51,8 @@ class N98_InfoFiles_Block_MoreInfo extends Mage_Core_Block_Template
      *
      * @return 
      */
-    public function getFileCollection() {
+    public function getFileCollection()
+    {
         $model = Mage::getModel('n98infofiles/file');
         /** @var $model N98_InfoFiles_Model_File */
         $collection = $model->getCollection();
@@ -60,4 +61,5 @@ class N98_InfoFiles_Block_MoreInfo extends Mage_Core_Block_Template
         $collection->load();
         return $collection;
     }
+
 }
