@@ -65,7 +65,6 @@ class N98_InfoFiles_Model_Observer
             $files = $this->_getRequest()->getPost('infofile_file');
             $names = $this->_getRequest()->getPost('infofile_name');
             $labels = $this->_getRequest()->getPost('infofile_label');
-            $remove = $this->_getRequest()->getPost('infofile_remove');
 
             for ($i = 1; $i < count($files); $i++) { // Skip $i=0, because it contains the template!
                 $fileName = $files[$i];
@@ -102,21 +101,23 @@ class N98_InfoFiles_Model_Observer
             // process existing files
             $exLabels = $this->_getRequest()->getPost('infofile_existing_label');
             $exRemove = $this->_getRequest()->getPost('infofile_existing_remove');
-            foreach ($exLabels as $id => $label) {
-                $fileModel = Mage::getModel('n98infofiles/file');
-                $fileModel->load($id);
+            if (count($exRemove) > 0) {
+                foreach ($exLabels as $id => $label) {
+                    $fileModel = Mage::getModel('n98infofiles/file');
+                    $fileModel->load($id);
 
-                if (isset($exRemove[$id])) {
-                    // delete file from disk
-                    $filename = Mage::getSingleton('catalog/product_media_config')->getMediaPath($fileModel->getFilename());
-                    unlink($filename);
-                    // delete record
-                    $fileModel->delete();
-                    continue;
+                    if (isset($exRemove[$id])) {
+                        // delete file from disk
+                        $filename = Mage::getSingleton('catalog/product_media_config')->getMediaPath($fileModel->getFilename());
+                        unlink($filename);
+                        // delete record
+                        $fileModel->delete();
+                        continue;
+                    }
+
+                    $fileModel->setLabel($label);
+                    $fileModel->save();
                 }
-
-                $fileModel->setLabel($label);
-                $fileModel->save();
             }
         } catch (Exception $e) {
             Mage::getSingleton('adminhtml/session')->addError($e->getMessage());

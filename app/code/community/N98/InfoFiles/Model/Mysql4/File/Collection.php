@@ -34,7 +34,7 @@
  * @category N98
  * @package N98_InfoFiles
  */
-class N98_InfoFiles_Model_Mysql4_File_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
+class N98_InfoFiles_Model_Mysql4_File_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract
 {
 
     /**
