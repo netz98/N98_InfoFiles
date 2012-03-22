@@ -2,10 +2,9 @@
 <layout>
     <adminhtml_catalog_product_edit>
         <reference name="product_tabs">
-            <action method="addTabAfter">
+            <action method="addTab">
                 <name>infofiles</name>
                 <block>n98infofiles/adminhtml_catalog_product_files</block>
-                <after>group_50</after> <!-- insert after images -->
             </action>
         </reference>
     </adminhtml_catalog_product_edit>
