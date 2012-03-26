@@ -1,0 +1,12 @@
+h1. N98_InfoFiles Magento Module
+
+h2. Objective
+
+This modul lets you attach files to a product that will be provided as a download for the user. Such files could contain product datasheets and so on.
+
+h2. How to Use
+
+The module ads a new tab "Files" to the product properties page in the backend. You can upload an unlimited number of files per product.
+The files are stored in the @media@ folder.
+
+When opening the product info page in the frontend, a new block is inserted that lists the provided files. Depending on the file extensions, an icon is shown for common file types.
