@@ -1,6 +1,8 @@
 h1. N98_InfoFiles Magento Module
 
-h2. Objective
+Provide downloadable informational files for products.
+
+h2. Functionality
 
 This modul lets you attach files to a product that will be provided as a download for the user. Such files could contain product datasheets and so on.
 
