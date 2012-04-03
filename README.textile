@@ -9,7 +9,7 @@ This modul lets you attach files to a product that will be provided as a downloa
 h2. Installation
 
 Copy all the files in your Magento root folder or use "modman":https://github.com/colinmollenhour/modman for installation.
-
+After installation, clear your Magento cache.
 
 h2. How to Use
 
@@ -18,9 +18,11 @@ The files are stored in the @media@ folder.
 
 When opening the product info page in the frontend, a new block is inserted that lists the provided files. For common file types an icon depending on the filename extension is shown.
 
-h2. Tested Magento Versions
+h2. Compatibility
 
-* 1.4
-* 1.6.0
-* 1.6.2
-* EE 1.1
+The module was successfully tested in the following Magento versions:
+
+* CE 1.4
+* CE 1.6.0
+* CE 1.6.2
+* EE 1.11
