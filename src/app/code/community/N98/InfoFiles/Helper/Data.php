@@ -36,49 +36,12 @@
  */
 
 /**
- * Files controller
- * Handels the upload from the flash uploader
+ * Empty helper to make translations work
  */
-class N98_InfoFiles_FilesController extends Mage_Adminhtml_Controller_Action
+class N98_InfoFiles_Helper_Data extends Mage_Core_Helper_Abstract
 {
-
-    public function uploadAction()
+    public function getTest()
     {
-        try {
-            $uploader = new Mage_Core_Model_File_Uploader('file');
-            $uploader->setAllowedExtensions();
-            $uploader->setAllowRenameFiles(true);
-            $uploader->setFilesDispersion(true);
-            $result = $uploader->save(
-                            Mage::getSingleton('catalog/product_media_config')->getBaseTmpMediaPath()
-            );
-
-            $result['url'] = Mage::getSingleton('catalog/product_media_config')->getTmpMediaUrl($result['file']);
-            $result['cookie'] = array(
-                'name' => session_name(),
-                'value' => $this->_getSession()->getSessionId(),
-                'lifetime' => $this->_getSession()->getCookieLifetime(),
-                'path' => $this->_getSession()->getCookiePath(),
-                'domain' => $this->_getSession()->getCookieDomain()
-            );
-        } catch (Exception $e) {
-            $result = array(
-                'error' => $e->getMessage(),
-                'errorcode' => $e->getCode());
-        }
-
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        return Mage::app()->getWebsite(2)->getCode();
     }
-
-    /**
-     * Checks if the user is allowed to call this controller
-     *
-     * @return boolean
-     */
-    protected function _isAllowed()
-    {
-        return Mage::getSingleton('admin/session')->isAllowed('catalog/products');
-    }
-
 }
-

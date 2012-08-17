@@ -1,0 +1,78 @@
+scope:
+  website:
+    - website_id: 2
+      code: german_website
+      name: German Website
+      default_group_id: 2
+  group:
+    - group_id: 2
+      website_id: 2
+      name: German Default Store
+      default_store_id: 2
+      root_category_id: 2
+  store:
+    - store_id: 2
+      website_id: 2
+      group_id: 2
+      code: de
+      name: de
+      is_active: 1
+config:
+  default/catalog/price/scope: 1
+
+eav:
+  catalog_product:
+    - entity_id: 1
+      type_id: simple
+      sku: book
+      name: Book
+      short_description: Book
+      description: Book
+      url_key: book
+      stock:
+        qty: 100.00
+        is_in_stock: 1
+        stock_id: 1
+      website_ids:
+        - 1
+      category_ids:
+        - 2 # Default Category
+      price: 12.99
+      tax_class_id: 2 # Taxable Goods
+      status: 1 # Enabled
+      visibility: 4 # Visible in Catalog & Search
+      websites: # Set different prices per website
+        german_website:
+          price: 9.99
+          special_price: 5.99
+    - entity_id: 2
+        type_id: simple
+        sku: book-2
+        name: Book 2
+        short_description: Book
+        description: Book
+        url_key: book
+        stock:
+          qty: 100.00
+          is_in_stock: 1
+          stock_id: 1
+        website_ids:
+          - 1
+        category_ids:
+          - 2 # Default Category
+        price: 12.99
+        tax_class_id: 2 # Taxable Goods
+        status: 1 # Enabled
+        visibility: 4 # Visible in Catalog & Search
+        websites: # Set different prices per website
+          german_website:
+            price: 9.99
+            special_price: 5.99
+
+tables:
+    n98infofiles/file:
+        - id: 1
+          product_id: 1
+          store_id: 2
+          label: Reading rehearsal
+          filename: reading_rehearsal.pdf

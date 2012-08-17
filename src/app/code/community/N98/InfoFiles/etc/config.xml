@@ -32,7 +32,7 @@ This software is provided by the netz98 new media GmbH without any express or im
 <config>
     <modules>
         <N98_InfoFiles>
-            <version>0.0.3</version>
+            <version>0.1.0</version>
         </N98_InfoFiles>
     </modules>
     <frontend>
@@ -58,7 +58,7 @@ This software is provided by the netz98 new media GmbH without any express or im
              <adminhtml>
                  <args>
                      <modules>
-                         <n98infofiles before="Mage_Adminhtml">N98_InfoFiles</n98infofiles>
+                         <n98infofiles before="Mage_Adminhtml">N98_InfoFiles_Adminhtml</n98infofiles>
                      </modules>
                  </args>
              </adminhtml>
@@ -144,4 +144,11 @@ This software is provided by the netz98 new media GmbH without any express or im
             </modules>
         </translate>
     </adminhtml>
+    <phpunit>
+        <suite>
+            <modules>
+                <N98_InfoFiles />
+            </modules>
+        </suite>
+    </phpunit>
 </config>

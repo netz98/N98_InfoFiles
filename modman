@@ -1,8 +1,8 @@
-app/etc/modules/N98_InfoFiles.xml                              app/etc/modules/N98_InfoFiles.xml
-app/code/community/N98/InfoFiles                               app/code/community/N98/InfoFiles
-app/design/adminhtml/default/default/layout/n98/infofiles.xml  app/design/adminhtml/default/default/layout/n98/infofiles.xml
-app/design/adminhtml/default/default/template/n98/infofiles    app/design/adminhtml/default/default/template/n98/infofiles
-app/design/frontend/base/default/layout/n98/infofiles.xml      app/design/frontend/base/default/layout/n98/infofiles.xml
-app/design/frontend/base/default/template/n98/infofiles        app/design/frontend/base/default/template/n98/infofiles
-app/locale/de_DE/N98_InfoFiles.csv                             app/locale/de_DE/N98_InfoFiles.csv
-skin/frontend/base/default/images/n98infofiles                 skin/frontend/base/default/images/n98infofiles
+src/app/etc/modules/N98_InfoFiles.xml                              app/etc/modules/N98_InfoFiles.xml
+src/app/code/community/N98/InfoFiles                               app/code/community/N98/InfoFiles
+src/app/design/adminhtml/default/default/layout/n98/infofiles.xml  app/design/adminhtml/default/default/layout/n98/infofiles.xml
+src/app/design/adminhtml/default/default/template/n98/infofiles    app/design/adminhtml/default/default/template/n98/infofiles
+src/app/design/frontend/base/default/layout/n98/infofiles.xml      app/design/frontend/base/default/layout/n98/infofiles.xml
+src/app/design/frontend/base/default/template/n98/infofiles        app/design/frontend/base/default/template/n98/infofiles
+src/app/locale/de_DE/N98_InfoFiles.csv                             app/locale/de_DE/N98_InfoFiles.csv
+src/skin/frontend/base/default/images/n98infofiles                 skin/frontend/base/default/images/n98infofiles
