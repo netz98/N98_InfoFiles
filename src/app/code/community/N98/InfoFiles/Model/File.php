@@ -113,7 +113,13 @@ class N98_InfoFiles_Model_File extends Mage_Core_Model_Abstract
     {
         $filename = Mage::getSingleton('catalog/product_media_config')
                         ->getMediaPath($this->getFilename());
-        return filesize($filename);
+
+        if (is_file($filename)) {
+
+            return filesize($filename);
+        }
+
+        return 0;
     }
 
     /**
