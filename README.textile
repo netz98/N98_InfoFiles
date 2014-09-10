@@ -26,3 +26,4 @@ The module was successfully tested in the following Magento versions:
 * CE 1.6.0
 * CE 1.6.2
 * EE 1.11
+* EE 1.12

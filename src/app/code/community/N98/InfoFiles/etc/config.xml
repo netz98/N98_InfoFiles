@@ -32,7 +32,7 @@ This software is provided by the netz98 new media GmbH without any express or im
 <config>
     <modules>
         <N98_InfoFiles>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
         </N98_InfoFiles>
     </modules>
     <frontend>
@@ -110,7 +110,7 @@ This software is provided by the netz98 new media GmbH without any express or im
             </n98infofiles>
             <adminhtml>
                 <rewrite>
-                    <media_js>N98_InfoFiles_Helper_Media_Js</media_js>
+                    <js>N98_InfoFiles_Helper_Js</js>
                 </rewrite>
             </adminhtml>
         </helpers>
