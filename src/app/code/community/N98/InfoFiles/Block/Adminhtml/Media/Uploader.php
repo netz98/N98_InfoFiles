@@ -43,8 +43,16 @@ class N98_InfoFiles_Block_Adminhtml_Media_Uploader extends Mage_Adminhtml_Block_
         parent::__construct();
         $this->setTemplate('n98/infofiles/uploader.phtml');
         $url = Mage::getModel('adminhtml/url')->addSessionParam()->getUrl('*/files/upload');
+
 //      the next line can be uncommeted to debug the uploading via xdebug (in netbeans)
 //      $url.= "&XDEBUG_SESSION_START=netbeans-xdebug";
-        $this->getConfig()->setUrl($url);
+
+		// 20170419 fix for SUPEE-8788 and/or Magento 1.9.3
+		if (class_exists("Mage_Uploader_Block_Abstract")) {
+			$this->getUploaderConfig()->setTarget($url);
+		} else {
+			// old behaviour
+			$this->getConfig()->setUrl($url);
+		}
     }
 }

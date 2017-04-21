@@ -34,70 +34,133 @@
  */
 ?>
 
-<?php echo $this->helper('adminhtml/js')->includeScript('lib/flex.js') ?>
-<?php echo $this->helper('adminhtml/js')->includeScript('mage/adminhtml/flexuploader.js') ?>
-<?php echo $this->helper('adminhtml/js')->includeScript('lib/FABridge.js') ?>
+<?php
+/**
+ * Uploader-js files already included by magento when using >=1.9.3 or SUPEE-8788 installed
+ */
+?>
+<?php if (!class_exists("Mage_Uploader_Block_Abstract")) { ?>
+	<?php echo $this->helper('adminhtml/js')->includeScript('lib/flex.js') ?>
+	<?php echo $this->helper('adminhtml/js')->includeScript('mage/adminhtml/flexuploader.js') ?>
+	<?php echo $this->helper('adminhtml/js')->includeScript('lib/FABridge.js') ?>
+<?php } ?>
+
 <?php echo $this->helper('adminhtml/js')->getTranslatorScript() ?>
 
 
-<div id="<?php echo $this->getHtmlId() ?>" class="uploader">
-    <div class="buttons">
-        <?php /* buttons included in flex object */ ?>
-        <?php  /*echo $this->getBrowseButtonHtml()*/  ?>
-        <?php  /*echo $this->getUploadButtonHtml()*/  ?>
-        <div id="<?php echo $this->getHtmlId() ?>-install-flash" style="display:none">
-            <?php echo Mage::helper('media')->__('This content requires last version of Adobe Flash Player. <a href="%s">Get Flash</a>', 'http://www.adobe.com/go/getflash/') ?>
-        </div>
-    </div>
-    <div class="clear"></div>
-    <div class="no-display" id="<?php echo $this->getHtmlId() ?>-template">
-        <div id="{{id}}" class="file-row">
-        <span class="file-info">{{name}} ({{size}})</span>
-        <span class="delete-button"><?php echo $this->getDeleteButtonHtml() ?></span>
-        <span class="progress-text"></span>
-        <div class="clear"></div>
-        </div>
-    </div>
-    <div class="no-display" id="<?php echo $this->getHtmlId() ?>-template-progress">
-        {{percent}}% {{uploaded}} / {{total}}
-    </div>
-</div>
+<?php if (class_exists("Mage_Uploader_Block_Abstract")) { ?>
+	<div id="<?php echo $this->getHtmlId() ?>" class="uploader">
+	    <div class="buttons a-right">
+	        <?php echo $this->getBrowseButtonHtml(); ?>
+	        <?php echo $this->getUploadButtonHtml(); ?>
+	    </div>
+	</div>
+	<div class="no-display" id="<?php echo $this->getElementId('template') ?>">
+	    <div id="{{id}}-container" class="file-row">
+	        <span class="file-info">{{name}} {{size}}</span>
+	        <span class="delete-button"><?php echo $this->getDeleteButtonHtml() ?></span>
+	        <span class="progress-text"></span>
+	        <div class="clear"></div>
+	    </div>
+	</div>
+	<script type="text/javascript">
+	    (function() {
+	        var uploader = new Uploader(<?php echo $this->getJsonConfig(); ?>);
 
-<script type="text/javascript">
-//<![CDATA[
+			<?php
+			/**
+			 * for document.on see: https://github.com/Agence-DnD/PIMGento/pull/177/commits/c7f019d7676786abff47d8a641c968268fe98557?diff=split
+			 * response only in uploader:fileSuccess included, not in uploader:success
+			 * response being generated in FilesController.php
+			 */
+			?>
+			document.on('uploader:fileSuccess', function(event) {
 
-var maxUploadFileSizeInBytes = <?php echo $this->getDataMaxSizeInBytes() ?>;
-var maxUploadFileSize = '<?php echo $this->getDataMaxSize() ?>';
+				// has the event been fired from the Infofiles-Container?
+				if (event.memo.containerId!='<?php echo $this->getHtmlId() ?>') return;
 
-<?php echo $this->getJsObjectName() ?> = new Flex.Uploader('<?php echo $this->getHtmlId() ?>', '<?php echo $this->getUploaderUrl('media/uploader.swf') ?>', <?php echo $this->getConfigJson() ?>);
-<?php echo $this->getJsObjectName() ?>.onFilesComplete = function(completedFiles){
-    // remove uploaded files from the list
-    completedFiles.each(function(file){
-        var templateElement = $('infofiles_template');
-        var template = new Template('<tr id="__id__" class="preview">' + 
-            templateElement.innerHTML + '</tr>', new RegExp(
-            '(^|.|\\r|\\n)(__([a-zA-Z0-9_]+)__)', ''))
+				var templateElement = $('infofiles_template');
+				var template = new Template('<tr id="__id__" class="preview">' +
+				    templateElement.innerHTML + '</tr>', new RegExp(
+				    '(^|.|\\r|\\n)(__([a-zA-Z0-9_]+)__)', ''))
 
-        var response = file.response.evalJSON();
-        // ignore errornous files
-        if (response.error) return;
-        var listElement = $('infofiles_list');
-        var html = template.evaluate(response);
-        Element.insert(listElement, {
-            bottom :html
-        });
-        <?php echo $this->getJsObjectName() ?>.removeFile(file.id);
-    });
-}
-// hide flash buttons
-if ($('<?php echo $this->getHtmlId() ?>-flash') != undefined) {
-    $('<?php echo $this->getHtmlId() ?>-flash').setStyle({float:'left'});
-}
-//]]>
+				var response = event.memo.response.evalJSON();
+				// ignore errornous files
+				if (response.error) return;
+				var listElement = $('infofiles_list');
+				var html = template.evaluate(response);
+				Element.insert(listElement, {
+				    bottom :html
+				});
+			});
 
-if (varienGlobalEvents) {
-    varienGlobalEvents.attachEventHandler('tabChangeBefore', <?php echo $this->getJsObjectName() ?>.onContainerHideBefore);
-}
+	        if (varienGlobalEvents) {
+	            varienGlobalEvents.attachEventHandler('tabChangeBefore', uploader.onContainerHideBefore);
+	        }
+	    })();
+	</script>
 
-//]]>
-</script>
+<?php } else { ?>
+
+	<div id="<?php echo $this->getHtmlId() ?>" class="uploader">
+	    <div class="buttons">
+	        <?php /* buttons included in flex object */ ?>
+	        <?php  /*echo $this->getBrowseButtonHtml()*/  ?>
+	        <?php  /*echo $this->getUploadButtonHtml()*/  ?>
+	        <div id="<?php echo $this->getHtmlId() ?>-install-flash" style="display:none">
+	            <?php echo Mage::helper('media')->__('This content requires last version of Adobe Flash Player. <a href="%s">Get Flash</a>', 'http://www.adobe.com/go/getflash/') ?>
+	        </div>
+	    </div>
+	    <div class="clear"></div>
+	    <div class="no-display" id="<?php echo $this->getHtmlId() ?>-template">
+	        <div id="{{id}}" class="file-row">
+	        <span class="file-info">{{name}} ({{size}})</span>
+	        <span class="delete-button"><?php echo $this->getDeleteButtonHtml() ?></span>
+	        <span class="progress-text"></span>
+	        <div class="clear"></div>
+	        </div>
+	    </div>
+	    <div class="no-display" id="<?php echo $this->getHtmlId() ?>-template-progress">
+	        {{percent}}% {{uploaded}} / {{total}}
+	    </div>
+	</div>
+
+	<script type="text/javascript">
+	//<![CDATA[
+
+	var maxUploadFileSizeInBytes = <?php echo $this->getDataMaxSizeInBytes() ?>;
+	var maxUploadFileSize = '<?php echo $this->getDataMaxSize() ?>';
+
+	<?php echo $this->getJsObjectName() ?> = new Flex.Uploader('<?php echo $this->getHtmlId() ?>', '<?php echo $this->getUploaderUrl('media/uploader.swf') ?>', <?php echo $this->getConfigJson() ?>);
+	<?php echo $this->getJsObjectName() ?>.onFilesComplete = function(completedFiles){
+	    // remove uploaded files from the list
+	    completedFiles.each(function(file){
+	        var templateElement = $('infofiles_template');
+	        var template = new Template('<tr id="__id__" class="preview">' +
+	            templateElement.innerHTML + '</tr>', new RegExp(
+	            '(^|.|\\r|\\n)(__([a-zA-Z0-9_]+)__)', ''))
+
+	        var response = file.response.evalJSON();
+	        // ignore errornous files
+	        if (response.error) return;
+	        var listElement = $('infofiles_list');
+	        var html = template.evaluate(response);
+	        Element.insert(listElement, {
+	            bottom :html
+	        });
+	        <?php echo $this->getJsObjectName() ?>.removeFile(file.id);
+	    });
+	}
+	// hide flash buttons
+	if ($('<?php echo $this->getHtmlId() ?>-flash') != undefined) {
+	    $('<?php echo $this->getHtmlId() ?>-flash').setStyle({float:'left'});
+	}
+	//]]>
+
+	if (varienGlobalEvents) {
+	    varienGlobalEvents.attachEventHandler('tabChangeBefore', <?php echo $this->getJsObjectName() ?>.onContainerHideBefore);
+	}
+
+	//]]>
+	</script>
+<?php } ?>
